@@ -1,14 +1,15 @@
 import Navbar from "react-bootstrap/Navbar";
 import { Container, Button } from "react-bootstrap";
-import logo from "../assets/logo.png"
-import registerModal from "./modals/registerModal";
+import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const NavbarComponent = () => {
   
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar bg="dark" variant="dark" className="mb-3">
       <Container>
-        <Navbar.Brand href="#home">
+        <Link to="/shop">
+        <Navbar.Brand>
           <img
             alt="logo"
             src={logo}
@@ -17,9 +18,11 @@ const NavbarComponent = () => {
             className="d-inline-block align-top"
           /> William's inn
         </Navbar.Brand>
+        </Link>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-        <Button variant="outline-info">Log in</Button>
+        <Link to="/signup"><Button variant="outline-info">Sign up</Button></Link>
+        <Link to="/signin"><Button variant="outline-info">Log in</Button></Link>
           <Navbar.Text>
             Signed in as: <a href="#login">Mark Otto</a>,
           </Navbar.Text>

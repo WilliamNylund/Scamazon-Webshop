@@ -20,3 +20,6 @@ div.info-item {
     margin: 20px;
     border: 5px solid red;
 }
+div.sign-up {
+    max-width: 400px;
+}
