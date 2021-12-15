@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="main container-fluid" >
+    <div class="row justify-content-center">
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="https://www.agilent.com/cs/publishingimages/data_chip_PDP_320x320.jpg" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Statistics</h5>
+                  <p class="card-text">Our shop currently contains {{item_count}} products.</p>
+                  <p class="card-text"><small class="text-muted">Updated just now</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Populate database</h5>
+                  <p class="card-text">Delete all items and populate the database with 6 new users and 30 brand new items!</p>
+                  <button type="button" class="btn btn-primary">Populate</button>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <img src="https://scx1.b-cdn.net/csz/news/800a/2014/willthesunex.jpg" class="img-fluid rounded-start" alt="...">
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="https://previews.123rf.com/images/oksananahorna/oksananahorna1701/oksananahorna170100023/69159124-online-shopping-concept-goods-food-and-products-fly-into-the-shopping-trolley-vector-illustration.jpg" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">N.B.: By going to the store you accept our terms and conditions</p>
+                  <a href="/shop"><button type="button" class="btn btn-primary">Lets get shopping!</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+{% endblock %}
