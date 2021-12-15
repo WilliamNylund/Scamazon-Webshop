@@ -1,5 +1,6 @@
 import CardGroup from "react-bootstrap/CardGroup";
 import ProductCard from "./ProductCard.js";
+import Header from "./Header.js";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Container } from "react-bootstrap";

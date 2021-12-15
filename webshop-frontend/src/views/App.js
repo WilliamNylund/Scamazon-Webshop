@@ -8,8 +8,7 @@ import SignIn from "./SignIn";
 
 const App = () => {
   return (
-    <div className="main">
-      
+    <>
       <Router>
       <Navbar />
         <div>
@@ -21,7 +20,7 @@ const App = () => {
           </Routes>
         </div>
       </Router>
-    </div>
+    </>
   );
 };
 export default App;

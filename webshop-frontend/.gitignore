@@ -1,22 +1,3 @@
-## Backend ##
-
-# Django
-*.log
-*.pot
-*.pyc
-__pycache__
-db.sqlite3
-staticfiles
-
-# Environments 
-env
-
-# Python
-py[cod]
-
-
-## Frontend ##
-
 # dependencies
 /node_modules
 /.pnp

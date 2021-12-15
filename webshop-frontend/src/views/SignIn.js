@@ -1,8 +1,9 @@
 import { Container, Form, Button } from "react-bootstrap";
-
+import Header from "../components/Header"
 const SignIn = () => {
   return (
     <Container className="sign-up justify-content-md-center">
+      <Header text="Sign in"/>
       <Form>
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>Email address</Form.Label>
