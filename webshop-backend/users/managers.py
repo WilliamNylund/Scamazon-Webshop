@@ -13,8 +13,13 @@ class UserManager(BaseUserManager):
             raise ValueError('The email must be set')
         if not password:
             raise ValueError('The password must be set')
+        print("haloj")
+
         user = self.model(email=email, **extra_fields)
+        print("haloj1")
+
         user.set_password(password)
+
         user.save()
         return user
 

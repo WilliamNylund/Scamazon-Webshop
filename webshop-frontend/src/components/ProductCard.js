@@ -1,19 +1,19 @@
 import Card from "react-bootstrap/Card";
 import logo from "../assets/logo.png"
-const Products = () => {
+const Products = (props) => {
+  const {product} = props;
   return (
     <div className="productCard">
       <Card>
         <Card.Img variant="top" src={logo} width="100px" height="100px"/>
         <Card.Body>
-          <Card.Title>Card title</Card.Title>
+          <Card.Title className="product-title">{product.title}</Card.Title>
           <Card.Text>
-            This is a longer card with supporting text below as a natural
-            lead-in to additional content. This content is a little bit longer.
+            {product.description}
           </Card.Text>
         </Card.Body>
         <Card.Footer>
-        <small className="text-muted">Last updated 3 mins ago</small>
+        {product.price} €
       </Card.Footer>
       </Card>
     </div>

@@ -2,10 +2,20 @@ import Navbar from "react-bootstrap/Navbar";
 import { Container, Button } from "react-bootstrap";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 const NavbarComponent = () => {
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [token, setToken] = useState(null)
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log("checking for token");
+    console.log(token);
+    if (token) {
+      setToken(token)
+    }
+    console.log(token);
+  })
 
   return (
     <Navbar bg="dark" variant="dark" className="mb-3">
@@ -19,7 +29,7 @@ const NavbarComponent = () => {
               height="60"
               className="d-inline-block align-top"
             />{" "}
-            William's inn
+            Scamazon
           </Link>
         </Navbar.Brand>
 

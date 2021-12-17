@@ -1,17 +1,23 @@
+from math import log
+from random import lognormvariate
 from .serializers import ItemSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
 from .models import Item
-
+from django.core.paginator import Paginator
 class ItemList(APIView):
     """
     List all items, or create a new item.
     """
     def get(self, request, format=None):
         items = Item.objects.all()
-        serializer = ItemSerializer(items, many=True)
+        page_number = self.request.query_params.get('page_number', 1) #1 is default
+        page_size = 10
+        paginator = Paginator(items , page_size)
+
+        serializer = ItemSerializer(paginator.page(page_number), many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
@@ -51,3 +57,4 @@ class ItemDetail(APIView):
         item = self.get_object(pk)
         item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+

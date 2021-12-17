@@ -1,5 +1,3 @@
-import Carousel from "../components/Carousel";
-import Info from "../components/Info";
 import Shop from "../views/Shop";
 import SignUp from "../views/SignUp";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
