@@ -7,5 +7,6 @@ class Item(models.Model):
     description = models.CharField(max_length=250, blank=True, default='')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     class Meta:
         ordering = ['created_at']

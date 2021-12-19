@@ -6,18 +6,22 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
 from .models import Item
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 class ItemList(APIView):
     """
     List all items, or create a new item.
     """
     def get(self, request, format=None):
-        items = Item.objects.all()
-        page_number = self.request.query_params.get('page_number', 1) #1 is default
+        title_filter = self.request.query_params.get('titleFilter', '')
+        items = Item.objects.all().filter(title__contains=title_filter)
+        page_number = self.request.query_params.get('pageNumber', 1) #1 is default
         page_size = 10
         paginator = Paginator(items , page_size)
-
-        serializer = ItemSerializer(paginator.page(page_number), many=True)
+        try:
+            item_page = paginator.page(page_number)
+        except EmptyPage: 
+            item_page = []
+        serializer = ItemSerializer(item_page, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):

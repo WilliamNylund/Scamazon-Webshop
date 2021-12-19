@@ -15,7 +15,7 @@ const NavbarComponent = () => {
       setToken(token)
     }
     console.log(token);
-  })
+  }, [])
 
   return (
     <Navbar bg="dark" variant="dark" className="mb-3">
