@@ -26,11 +26,11 @@ const Products = ({product}) => {
         <Card.Footer>
           <Row>
             <Col>Uploaded at {product.created_at}</Col>
-            {user && (user.id != product.owner) ? (
+            {user && ((user.id != product.owner) ? (
             <Col className="text-end"><Button size="sm" onClick={addToCart}>Add to cart</Button></Col>
             ) : (
             <Col className="text-end">This product is uploaded by you.</Col>
-            )}
+            ))}
           </Row>
         </Card.Footer>
       </Card>
