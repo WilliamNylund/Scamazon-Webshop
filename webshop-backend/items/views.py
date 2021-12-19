@@ -1,5 +1,3 @@
-from math import log
-from random import lognormvariate
 from .serializers import ItemSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
