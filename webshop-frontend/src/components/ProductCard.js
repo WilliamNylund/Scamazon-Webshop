@@ -5,7 +5,6 @@ const Products = (props) => {
   return (
     <div className="productCard">
       <Card>
-        <Card.Img variant="top" src={logo} width="100px" height="100px"/>
         <Card.Body>
           <Card.Title className="product-title">{product.title}</Card.Title>
           <Card.Text>
