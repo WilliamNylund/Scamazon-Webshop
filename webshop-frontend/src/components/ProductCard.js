@@ -1,15 +1,38 @@
 import Card from "react-bootstrap/Card";
 import logo from "../assets/logo.png";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Tooltip, Overlay } from "react-bootstrap";
 import { UserContext } from "../contexts/UserContext";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 
-const Products = ({product}) => {
-  const { user, setUser } = useContext(UserContext);
-
+const Products = ({ product }) => {
+  const { user } = useContext(UserContext);
+  const [showToolTip, setShowToolTip] = useState(false)
+  const target = useRef(null);
+  
   const addToCart = () => {
-    console.log(product.id);
-  }
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (inCart()) {
+      console.log("product already exists in cart");
+      setShowToolTip(true);
+      setTimeout(() => {
+        setShowToolTip(false);
+      }, 1500)
+      return;
+    }
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
+
+  const inCart = () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    console.log(cart);
+    const index = cart.findIndex((i) => i.id == product.id);
+    console.log(index);
+    if (index > -1) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <div className="productCard">
@@ -17,7 +40,9 @@ const Products = ({product}) => {
         <Card.Body>
           <Card.Title className="product-title">
             <Row>
-              <Col>{product.title} {product.owner}</Col>
+              <Col>
+                {product.title} {product.owner}
+              </Col>
               <Col className="text-end">{product.price} €</Col>
             </Row>
           </Card.Title>
@@ -26,11 +51,32 @@ const Products = ({product}) => {
         <Card.Footer>
           <Row>
             <Col>Uploaded at {product.created_at}</Col>
-            {user && ((user.id != product.owner) ? (
-            <Col className="text-end"><Button size="sm" onClick={addToCart}>Add to cart</Button></Col>
-            ) : (
-            <Col className="text-end">This product is uploaded by you.</Col>
-            ))}
+            {user &&
+              (user.id != product.owner ? (
+                <Col className="text-end">
+                  <Button
+                    size="sm"
+                    id={"add-" + product.id}
+                    onClick={addToCart}
+                    ref={target}
+                  >
+                    Add to cart
+                  </Button>
+                  <Overlay
+                    show={showToolTip}
+                    placement="right"
+                    target={target.current}
+                    variant="danger"
+                  >
+                    <Tooltip variant="danger">
+                      Item is already in your cart
+                    </Tooltip>
+                  
+                  </Overlay>
+                </Col>
+              ) : (
+                <Col className="text-end">This product is uploaded by you.</Col>
+              ))}
           </Row>
         </Card.Footer>
       </Card>

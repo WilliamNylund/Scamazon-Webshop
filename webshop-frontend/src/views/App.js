@@ -1,8 +1,9 @@
-import Shop from "../views/Shop";
-import SignUp from "../views/SignUp";
+import Shop from "./Shop.js";
+import SignIn from "./SignIn"
+import SignUp from "./SignUp"
+import Cart from "./Cart";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Navbar from "../components/Navbar.js";
-import SignIn from "./SignIn";
 import { useState, useMemo, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
@@ -37,6 +38,7 @@ const App = () => {
               <Route path="/shop" element={<Shop />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<SignIn />} />
+              <Route path="/cart" element={<Cart />} />
               <Route exact path="/" element={<Shop />} />
             </Routes>
           </div>

@@ -15,7 +15,6 @@ const Products = () => {
   useEffect(() => {
     getProducts(pageNo, titleFilter)
       .then((res) => {
-        console.log(res.data);
         if (res.data.length > 0) {
           setProducts(res.data);
         } else {

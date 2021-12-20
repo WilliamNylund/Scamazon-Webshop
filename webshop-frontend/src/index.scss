@@ -18,7 +18,7 @@ div.info-item {
     margin: 20px;
     border: 5px solid red;
 }
-div.sign-up {
+div.form-input {
     max-width: 400px;
 }
 
@@ -39,4 +39,16 @@ div.product-title {
 div.products {
     height: 700px;
     overflow-y: auto;
+}
+
+div.shopping-cart-row {
+    border-bottom: solid 1px #00704A;
+}
+
+div.cart-popover {
+    width: 300px;
+}
+
+.clickable {
+    cursor: pointer
 }

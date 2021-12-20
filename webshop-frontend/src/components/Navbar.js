@@ -6,6 +6,7 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
 import ConfirmationModal from "./Modals/ConfirmationModal";
+import CartPopover from "./CartPopover";
 
 const NavbarComponent = () => {
   const { user, setUser } = useContext(UserContext);
@@ -82,6 +83,7 @@ const NavbarComponent = () => {
               </Link>
             </>
           )}
+          <CartPopover/>
         </Navbar.Collapse>
       </Container>
       <ConfirmationModal
