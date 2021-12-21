@@ -67,7 +67,7 @@ const Products = () => {
 
   return (
     <>
-      <Container className="sign-up justify-content-lg-center mb-3">
+      <Container className="form-input justify-content-lg-center mb-3">
         <FormControl
           size="sm"
           type="text"

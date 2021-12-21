@@ -1,13 +1,14 @@
-import { OverlayTrigger, Popover, Button, Row, Col } from "react-bootstrap";
+import { Button, Row, Col, Offcanvas } from "react-bootstrap";
 import { BsCart2, BsXLg } from "react-icons/bs";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
-const CartPopover = () => {
+const CartOffcanvas = ({show, handleClose}) => {
   const user = useContext(UserContext);
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState("0");
+
 
   const navigate = useNavigate();
 
@@ -44,17 +45,13 @@ const CartPopover = () => {
   }, [cart]);
 
   return (
-    <OverlayTrigger
-      trigger="click"
-      placement="bottom"
-      onEnter={populateCart}
-      rootClose
-      overlay={
-        <Popover className="justify-content cart-popover">
-          <Popover.Header>Shopping cart</Popover.Header>
-          <Popover.Body>
-            {cart.map((product, index) => (
-              <Row className="shopping-cart-row justify-content">
+    <Offcanvas show={show} onHide={handleClose} placement="end" onEntering={populateCart}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title><h3>Shopping Cart</h3></Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+        {cart.map((product, index) => (
+              <Row className="shopping-cart-row">
                 <Col xs="6">{product.title}</Col>
                 <Col xs="4">{product.price} € </Col>
                 <Col xs="2">
@@ -65,35 +62,30 @@ const CartPopover = () => {
                 </Col>
               </Row>
             ))}
-            <Row>
-              <Col xs="6">Total:</Col>
+            <Row className="shopping-cart-bottom-line">
+              <Col xs="6"><strong>Total:</strong></Col>
               <Col xs="4">{total} €</Col>
               <Col xs="2"></Col>
             </Row>
+            
             <Row>
               <Col xs={{ span: 4, offset: 6 }} className="mt-1">
                 <Button
                   size="sm"
                   onClick={() => {
-                    navigate("/cart");
+                    
                   }}
                 >
-                  Checkout
+                  Pay
                 </Button>
               </Col>
             </Row>
-          </Popover.Body>
-        </Popover>
-      }
-    >
-      <Button size="sm" variant="outline-primary">
-        <BsCart2 />
-      </Button>
-    </OverlayTrigger>
-  );
+        </Offcanvas.Body>
+      </Offcanvas>
+  )
 };
 
-export default CartPopover;
+export default CartOffcanvas;
 /*
 {
       id: 570,

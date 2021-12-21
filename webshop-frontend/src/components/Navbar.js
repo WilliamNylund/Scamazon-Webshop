@@ -6,22 +6,27 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
 import ConfirmationModal from "./Modals/ConfirmationModal";
-import CartPopover from "./CartPopover";
+import CartOffcanvas from "./CartOffcanvas";
+import { BsCart2 } from "react-icons/bs";
 
 const NavbarComponent = () => {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
-  
+  const handleShowConfirmation = () => setShowConfirmation(true);
+  const handleCloseConfirmation = () => setShowConfirmation(false);
+
+  const [showCart, setShowCart] = useState(false);
+
+  const handleShowCart = () => setShowCart(true);
+  const handleCloseCart = () => setShowCart(false);
 
   const signOut = () => {
     setUser(null);
     removeServerToken();
     localStorage.removeItem("token");
-    setShow(false)
+    setShowConfirmation(false);
     navigate("/shop");
   };
 
@@ -55,7 +60,7 @@ const NavbarComponent = () => {
                 className="button-group"
                 variant="outline-primary"
                 size="sm"
-                onClick={handleShow}
+                onClick={handleShowConfirmation}
               >
                 Log out
               </Button>
@@ -83,13 +88,16 @@ const NavbarComponent = () => {
               </Link>
             </>
           )}
-          <CartPopover/>
+          <Button size="sm" variant="outline-primary" onClick={handleShowCart}>
+            <BsCart2 />
+          </Button>
+          <CartOffcanvas show={showCart} handleClose={handleCloseCart} />
         </Navbar.Collapse>
       </Container>
       <ConfirmationModal
         handleConfirm={signOut}
-        show={show}
-        handleClose={handleClose}
+        show={showConfirmation}
+        handleClose={handleCloseConfirmation}
         text={"Are you sure you wanna sign out?"}
       />
     </Navbar>
@@ -99,7 +107,6 @@ export default NavbarComponent;
 
 const removeServerToken = async () => {
   const token = localStorage.getItem("token");
-  console.log(token);
   axios
     .post(
       "http://127.0.0.1:8000/api/token/logout/",

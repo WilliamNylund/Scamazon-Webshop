@@ -42,7 +42,15 @@ div.products {
 }
 
 div.shopping-cart-row {
-    border-bottom: solid 1px #00704A;
+    font-size: 20px;
+    margin-top: 25px;
+    border-bottom: solid 1px $primary;
+}
+div.shopping-cart-bottom-line {
+    font-size: 25px;
+    margin-bottom: 25px;
+    padding-top: 25px;
+    border-top: solid 3px $primary;
 }
 
 div.cart-popover {

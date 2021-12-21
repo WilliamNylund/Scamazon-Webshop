@@ -35,7 +35,7 @@ const SignIn = () => {
   };
 
   return (
-    <Container className="sign-up justify-content-md-center">
+    <Container className="form-input justify-content-md-center">
       <Header text="Sign in" />
       {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
       <Form>
