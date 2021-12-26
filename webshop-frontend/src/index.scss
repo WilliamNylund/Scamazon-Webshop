@@ -44,7 +44,12 @@ div.products {
 div.shopping-cart-row {
     font-size: 20px;
     margin-top: 25px;
+}
+
+div.shopping-cart-line {
     border-bottom: solid 1px $primary;
+    font-size: 10px;
+    color: red;
 }
 div.shopping-cart-bottom-line {
     font-size: 25px;

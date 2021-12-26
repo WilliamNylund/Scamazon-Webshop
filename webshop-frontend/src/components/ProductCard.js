@@ -10,7 +10,7 @@ const Products = ({ product }) => {
   const target = useRef(null);
   
   const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart = JSON.parse(localStorage.getItem("cart")) || {};
     if (inCart()) {
       console.log("product already exists in cart");
       setShowToolTip(true);
@@ -19,16 +19,13 @@ const Products = ({ product }) => {
       }, 1500)
       return;
     }
-    cart.push(product);
+    cart[product.id] = (product);
     localStorage.setItem("cart", JSON.stringify(cart));
   };
 
   const inCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    console.log(cart);
-    const index = cart.findIndex((i) => i.id == product.id);
-    console.log(index);
-    if (index > -1) {
+    const cart = JSON.parse(localStorage.getItem("cart")) || {};
+    if(cart.hasOwnProperty(product.id)){
       return true;
     }
     return false;
@@ -41,7 +38,7 @@ const Products = ({ product }) => {
           <Card.Title className="product-title">
             <Row>
               <Col>
-                {product.title} {product.owner}
+                {product.title}
               </Col>
               <Col className="text-end">{product.price} €</Col>
             </Row>

@@ -29,6 +29,8 @@ const SignIn = () => {
         navigate("/shop");
       })
       .catch((e) => {
+        console.log(e);
+        console.log(e.message);
         setErrorMsg("Unable to sign in with provided credentials");
         // TODO please try again or reset password?
       });

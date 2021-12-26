@@ -10,16 +10,27 @@ class ItemList(APIView):
     List all items, or create a new item.
     """
     def get(self, request, format=None):
-        title_filter = self.request.query_params.get('titleFilter', '')
-        items = Item.objects.all().filter(title__contains=title_filter)
-        page_number = self.request.query_params.get('pageNumber', 1) #1 is default
-        page_size = 10
-        paginator = Paginator(items , page_size)
-        try:
-            item_page = paginator.page(page_number)
-        except EmptyPage: 
-            item_page = []
-        serializer = ItemSerializer(item_page, many=True)
+
+        queryset = Item.objects.all()
+        ids = request.GET.get('ids')
+        if ids is not None:
+            ids = ids.split(',')
+            queryset = queryset.filter(pk__in=ids)
+
+        title_filter = request.GET.get('titleFilter')
+        if title_filter is not None:
+            queryset = queryset.filter(title__contains=title_filter)
+        
+        page_number = request.GET.get('pageNumber')
+        if page_number is not None:
+            page_size = request.GET.get('pageSize', 10)
+            paginator = Paginator(queryset , page_size)
+            try:
+                queryset = paginator.page(page_number)
+            except EmptyPage: 
+                queryset = []
+
+        serializer = ItemSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
