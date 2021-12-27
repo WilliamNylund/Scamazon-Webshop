@@ -1,6 +1,7 @@
 import Shop from "./Shop.js";
 import SignIn from "./SignIn"
 import SignUp from "./SignUp"
+import Account from "./Account"
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Navbar from "../components/Navbar.js";
 import { useState, useMemo, useEffect } from "react";
@@ -37,6 +38,7 @@ const App = () => {
               <Route path="/shop" element={<Shop />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<SignIn />} />
+              <Route path="/account" element={<Account />} />
               <Route exact path="/" element={<Shop />} />
             </Routes>
           </div>

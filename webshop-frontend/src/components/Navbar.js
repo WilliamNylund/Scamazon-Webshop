@@ -1,5 +1,5 @@
 import Navbar from "react-bootstrap/Navbar";
-import { Container, Button, Modal } from "react-bootstrap";
+import { Container, Button, Dropdown } from "react-bootstrap";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
@@ -7,7 +7,8 @@ import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
 import ConfirmationModal from "./Modals/ConfirmationModal";
 import CartOffcanvas from "./CartOffcanvas";
-import { BsCart2 } from "react-icons/bs";
+import { BsCart2, BsGearFill } from "react-icons/bs";
+import { IconContext } from "react-icons";
 
 const NavbarComponent = () => {
   const { user, setUser } = useContext(UserContext);
@@ -30,7 +31,7 @@ const NavbarComponent = () => {
     navigate("/shop");
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   return (
     <Navbar bg="dark" variant="dark" className="mb-3">
@@ -53,17 +54,27 @@ const NavbarComponent = () => {
           {user ? (
             <>
               <Navbar.Text>
-                Signed in as: <a href="#login">{user.username}</a>
+                Welcome, <strong>{user.username}</strong>
               </Navbar.Text>
 
-              <Button
-                className="button-group"
-                variant="outline-primary"
-                size="sm"
-                onClick={handleShowConfirmation}
-              >
-                Log out
-              </Button>
+
+              <Dropdown>
+                <Dropdown.Toggle className="bg-dark border-0 p-0" id="dropdown-basic">
+                  <IconContext.Provider value={{ color: "#00704A", size: "1.5em" }}>
+                    <BsGearFill className="clickable button-group"/>
+                  </IconContext.Provider>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => {navigate("/myitems");}}>My items</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {navigate("/account");}}>Reset password</Dropdown.Item>
+                  <Dropdown.Item onClick={handleShowConfirmation}>Log out</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
+              <IconContext.Provider value={{ color: "#00704A", size: "1.5em" }}>
+                <BsCart2 className="clickable button-group" onClick={handleShowCart} />
+              </IconContext.Provider>
             </>
           ) : (
             <>
@@ -88,9 +99,6 @@ const NavbarComponent = () => {
               </Link>
             </>
           )}
-          <Button size="sm" variant="outline-primary" onClick={handleShowCart}>
-            <BsCart2 />
-          </Button>
           <CartOffcanvas show={showCart} handleClose={handleCloseCart} />
         </Navbar.Collapse>
       </Container>
