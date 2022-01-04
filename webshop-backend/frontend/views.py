@@ -6,7 +6,7 @@ from items.models import Item
 from users.models import User
 import random
 import decimal
-
+# 7
 def index(request):
     return render(request, 'build/index.html')
 
