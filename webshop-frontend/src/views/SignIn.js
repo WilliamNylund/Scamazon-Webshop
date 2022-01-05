@@ -15,7 +15,8 @@ const SignIn = () => {
   const updateEmail = (e) => setEmail(e.target.value);
   const updatePassword = (e) => setPassword(e.target.value);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     axios
       .post("http://127.0.0.1:8000/api/token/login/", {
         email: email,
@@ -32,7 +33,6 @@ const SignIn = () => {
         console.log(e);
         console.log(e.message);
         setErrorMsg("Unable to sign in with provided credentials");
-        // TODO please try again or reset password?
       });
   };
 
@@ -40,10 +40,11 @@ const SignIn = () => {
     <Container className="form-input justify-content-md-center">
       <Header text="Sign in" />
       {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
+            required
             type="email"
             placeholder="Enter email"
             name="email"
@@ -53,13 +54,14 @@ const SignIn = () => {
         <Form.Group className="mb-3" controlId="formGroupPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
+            required
             type="password"
             placeholder="Password"
             name="password"
             onChange={updatePassword}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button variant="primary" type="submit">
           Sign in!
         </Button>
       </Form>

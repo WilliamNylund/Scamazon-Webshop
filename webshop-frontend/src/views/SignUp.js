@@ -18,7 +18,8 @@ const SignUp = () => {
   const updatePassword = (e) => setPassword(e.target.value);
   const updateRePassword = (e) => setRePassword(e.target.value);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let request = axios.post("http://127.0.0.1:8000/api/users/", {
       email: email,
       username: username,
@@ -30,7 +31,6 @@ const SignUp = () => {
     });
     request.catch((e) => {
       setErrorMsg("Unable to register");
-      // TODO please try again or reset password?
     });
   };
 
@@ -41,9 +41,7 @@ const SignUp = () => {
       {userCreated ? (
         <Alert variant="success">
           <Alert.Heading>Success!</Alert.Heading>
-          <p>
-            Welcome {username}, please proceed to sign in.
-          </p>
+          <p>Welcome {username}, please proceed to sign in.</p>
           <hr />
           <div className="d-flex justify-content-end">
             <Link to="/signin">
@@ -52,10 +50,11 @@ const SignUp = () => {
           </div>
         </Alert>
       ) : (
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formGroupEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
+              required
               type="email"
               placeholder="Email"
               name="email"
@@ -65,6 +64,7 @@ const SignUp = () => {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Label>Username</Form.Label>
             <Form.Control
+              required
               type="text"
               placeholder="Username"
               name="username"
@@ -74,6 +74,7 @@ const SignUp = () => {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control
+              required
               type="password"
               placeholder="Password"
               name="password"
@@ -83,13 +84,14 @@ const SignUp = () => {
           <Form.Group className="mb-3" controlId="formGroupPassword">
             <Form.Label>Retype password</Form.Label>
             <Form.Control
+              required
               type="password"
               placeholder="Password"
               name="rePassword"
               onChange={updateRePassword}
             />
           </Form.Group>
-          <Button variant="primary" onClick={() => handleSubmit()}>
+          <Button variant="primary" type="submit">
             Sign up!
           </Button>
         </Form>
