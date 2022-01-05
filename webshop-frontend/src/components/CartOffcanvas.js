@@ -130,7 +130,7 @@ const CartOffcanvas = ({ show, handleClose }) => {
           </Row>
         )}
         <Row>
-          <Col xs="12" className="mt-1">
+          <Col xs="12" >
             {showSuccess && (
               <Alert variant="success">Purchase successful</Alert>
             )}

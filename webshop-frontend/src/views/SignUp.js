@@ -1,8 +1,8 @@
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import Header from "../components/Header";
-import { useState, setState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +10,6 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const navigate = useNavigate();
   const [userCreated, setUserCreated] = useState(false);
 
   const updateEmail = (e) => setEmail(e.target.value);
