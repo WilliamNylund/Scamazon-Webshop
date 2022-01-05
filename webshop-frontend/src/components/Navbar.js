@@ -57,8 +57,7 @@ const NavbarComponent = () => {
                 Welcome, <strong>{user.username}</strong>
               </Navbar.Text>
 
-
-              <Dropdown>
+              <Dropdown align={{ xs: 'start'}}>
                 <Dropdown.Toggle className="bg-dark border-0 p-0" id="dropdown-basic">
                   <IconContext.Provider value={{ color: "#00704A", size: "1.5em" }}>
                     <BsGearFill className="clickable button-group"/>

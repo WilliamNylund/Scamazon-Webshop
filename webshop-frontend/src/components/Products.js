@@ -67,7 +67,7 @@ const Products = () => {
 
   return (
     <>
-      <Container className="form-input justify-content-lg-center mb-3">
+      <Container className="form-input justify-content-center mb-3">
         <FormControl
           size="sm"
           type="text"
@@ -87,7 +87,7 @@ const Products = () => {
             ))}
           </Row>
           {alertMsg && (
-            <Row className="justify-content-md-center mt-4">
+            <Row className="justify-content-center mt-4">
               <Col md="auto">
                 {alertMsg}
               </Col>

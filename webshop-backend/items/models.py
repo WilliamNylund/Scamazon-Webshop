@@ -7,7 +7,7 @@ class Item(models.Model):
     description = models.CharField(max_length=250, blank=True, default='')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, related_name="items")
 
     class Meta:
         ordering = ['-created_at']

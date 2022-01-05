@@ -1,4 +1,4 @@
-import { Button, Row, Col, Offcanvas } from "react-bootstrap";
+import { Button, Row, Col, Offcanvas, Alert } from "react-bootstrap";
 import { BsCart2, BsXLg } from "react-icons/bs";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
@@ -8,6 +8,7 @@ const CartOffcanvas = ({ show, handleClose }) => {
   const user = useContext(UserContext);
   const [cart, setCart] = useState({});
   const [total, setTotal] = useState("0");
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const calculateCartTotal = () => {
     if (cart && Object.keys(cart).length > 0) {
@@ -41,11 +42,32 @@ const CartOffcanvas = ({ show, handleClose }) => {
   const emptyCart = () => {
     setCart({});
     localStorage.removeItem("cart");
-  }
+  };
 
   const pay = () => {
-    
-    emptyCart();
+    const productIds = Object.keys(cart);
+    const token = localStorage.getItem("token");
+    axios
+      .post(
+        "http://127.0.0.1:8000/api/orders/",
+        { items: productIds },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        setShowSuccess(true);
+        window.setTimeout(() => {
+          setShowSuccess(false);
+        }, 2000);
+        emptyCart();
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
   };
 
   useEffect(() => {
@@ -65,13 +87,15 @@ const CartOffcanvas = ({ show, handleClose }) => {
         </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
-        <Row>
-          <Col xs={{ span: 3, offset: 9 }}> 
-            <Button variant="link" size="sm" onClick={emptyCart}>
-              Remove all
-            </Button>
-          </Col>
-        </Row>
+        {Object.keys(cart).length > 0 && (
+          <Row>
+            <Col xs={{ span: 4, offset: 6 }}>
+              <Button variant="link" size="sm" onClick={emptyCart}>
+                Remove all
+              </Button>
+            </Col>
+          </Row>
+        )}
         {Object.keys(cart).map((id, index) => (
           <>
             <Row className="shopping-cart-row">
@@ -96,11 +120,20 @@ const CartOffcanvas = ({ show, handleClose }) => {
           <Col xs="4">{total} €</Col>
           <Col xs="2"></Col>
         </Row>
+        {Object.keys(cart).length > 0 && (
+          <Row>
+            <Col xs={{ span: 4, offset: 6 }} className="mt-1">
+              <Button size="sm" onClick={pay}>
+                Pay
+              </Button>
+            </Col>
+          </Row>
+        )}
         <Row>
-          <Col xs={{ span: 4, offset: 6 }} className="mt-1">
-            <Button size="sm" onClick={pay}>
-              Pay
-            </Button>
+          <Col xs="12" className="mt-1">
+            {showSuccess && (
+              <Alert variant="success">Purchase successful</Alert>
+            )}
           </Col>
         </Row>
       </Offcanvas.Body>

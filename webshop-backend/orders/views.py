@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
 from .models import Order
+from items.models import Item
 from rest_framework import permissions
 
 class OrderList(APIView):
@@ -18,6 +19,7 @@ class OrderList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
+        request.data['consumer'] = request.user.pk
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

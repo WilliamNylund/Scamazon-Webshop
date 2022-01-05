@@ -12,7 +12,6 @@ const MyItems = () => {
     <Container className="container-fluid">
     <Header text="My items"/>
 
-          <Row bg="blue">Hello</Row>
 
     </Container>
   );
