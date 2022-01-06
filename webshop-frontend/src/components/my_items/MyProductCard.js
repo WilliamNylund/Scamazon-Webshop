@@ -3,10 +3,11 @@ import { Row, Col, Button, Form } from 'react-bootstrap';
 import { useState, useEffect, useContext, useRef } from 'react';
 import ConfirmationModal from '../Modals/ConfirmationModal';
 import axios from 'axios';
-const MyProductCard = ({ product, type }) => {
+const MyProductCard = ({ product, type, setTest }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [newPrice, setNewPrice] = useState('');
   const [disableButton, setDisableButton] = useState(true);
+  const [currentPrice, setCurrentPrice] = useState(product.price);
 
   const handleShowConfirmation = () => setShowConfirmation(true);
   const handleCloseConfirmation = () => setShowConfirmation(false);
@@ -32,8 +33,8 @@ const MyProductCard = ({ product, type }) => {
         }
       )
       .then((response) => {
-        console.log(response);
         handleCloseConfirmation();
+        setCurrentPrice(parseFloat(newPrice).toFixed(2));
       })
       .catch((e) => {
         console.log('unable to update price');
@@ -47,7 +48,7 @@ const MyProductCard = ({ product, type }) => {
           <Card.Title className="product-title">
             <Row>
               <Col>{product.title}</Col>
-              <Col className="text-end">{product.price} €</Col>
+              <Col className="text-end">{currentPrice} €</Col>
             </Row>
           </Card.Title>
           <Card.Text>{product.description}</Card.Text>
