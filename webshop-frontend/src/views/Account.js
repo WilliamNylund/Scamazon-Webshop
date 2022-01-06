@@ -1,41 +1,43 @@
-import { Container, Form, Button, Alert } from "react-bootstrap";
-import Header from "../components/Header";
-import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Container, Form, Button, Alert } from 'react-bootstrap';
+import Header from '../components/Header';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Account = () => {
-  const [oldPassword, setOldPassword] = useState("");
-  const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [oldPassword, setOldPassword] = useState('');
+  const [password, setPassword] = useState('');
+  const [rePassword, setRePassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const updateOldPassword = (e) => setOldPassword(e.target.value);
   const updatePassword = (e) => setPassword(e.target.value);
   const updateRePassword = (e) => setRePassword(e.target.value);
 
   const handleSubmit = async () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
     axios
-      .post("http://127.0.0.1:8000/api/users/set_password/", {
-        current_password: oldPassword,
-        new_password: password,
-        re_new_password: rePassword
-      }, {
-        headers: {
-          Authorization: `Token ${token}`,
+      .post(
+        'http://127.0.0.1:8000/api/users/set_password/',
+        {
+          current_password: oldPassword,
+          new_password: password,
+          re_new_password: rePassword,
         },
-      }
-      
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
       )
       .then(async (res) => {
-        console.log("password changed");
+        console.log('password changed');
         console.log(res.data);
       })
       .catch((e) => {
         console.log(e);
         console.log(e.message);
-        setErrorMsg("Unable to sign in with provided credentials");
+        setErrorMsg('Unable to sign in with provided credentials');
         // TODO please try again or reset password?
       });
   };
@@ -64,14 +66,14 @@ const Account = () => {
           />
         </Form.Group>
         <Form.Group className="mb-3">
-            <Form.Label>Retype new password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Retype new Password"
-              name="rePassword"
-              onChange={updateRePassword}
-            />
-          </Form.Group>
+          <Form.Label>Retype new password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Retype new Password"
+            name="rePassword"
+            onChange={updateRePassword}
+          />
+        </Form.Group>
         <Button variant="primary" onClick={handleSubmit}>
           Sign in!
         </Button>

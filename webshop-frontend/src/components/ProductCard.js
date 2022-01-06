@@ -1,31 +1,30 @@
-import Card from "react-bootstrap/Card";
-import logo from "../assets/logo.png";
-import { Row, Col, Button, Tooltip, Overlay } from "react-bootstrap";
-import { UserContext } from "../contexts/UserContext";
-import { useState, useEffect, useContext, useRef } from "react";
+import Card from 'react-bootstrap/Card';
+import { Row, Col, Button, Tooltip, Overlay } from 'react-bootstrap';
+import { UserContext } from '../contexts/UserContext';
+import { useState, useContext, useRef } from 'react';
 
 const ProductCard = ({ product }) => {
   const { user } = useContext(UserContext);
-  const [showToolTip, setShowToolTip] = useState(false)
+  const [showToolTip, setShowToolTip] = useState(false);
   const target = useRef(null);
-  
+
   const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || {};
+    const cart = JSON.parse(localStorage.getItem('cart')) || {};
     if (inCart()) {
-      console.log("product already exists in cart");
+      console.log('product already exists in cart');
       setShowToolTip(true);
       setTimeout(() => {
         setShowToolTip(false);
-      }, 1500)
+      }, 1500);
       return;
     }
-    cart[product.id] = (product);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    cart[product.id] = product;
+    localStorage.setItem('cart', JSON.stringify(cart));
   };
 
   const inCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || {};
-    if(cart.hasOwnProperty(product.id)){
+    const cart = JSON.parse(localStorage.getItem('cart')) || {};
+    if (cart.hasOwnProperty(product.id)) {
       return true;
     }
     return false;
@@ -37,9 +36,7 @@ const ProductCard = ({ product }) => {
         <Card.Body>
           <Card.Title className="product-title">
             <Row>
-              <Col>
-                {product.title}
-              </Col>
+              <Col>{product.title}</Col>
               <Col className="text-end">{product.price} €</Col>
             </Row>
           </Card.Title>
@@ -53,22 +50,19 @@ const ProductCard = ({ product }) => {
                 <Col className="text-end">
                   <Button
                     size="sm"
-                    id={"add-" + product.id}
+                    id={'add-' + product.id}
                     onClick={addToCart}
-                    ref={target}
-                  >
+                    ref={target}>
                     Add to cart
                   </Button>
                   <Overlay
                     show={showToolTip}
                     placement="right"
                     target={target.current}
-                    variant="danger"
-                  >
+                    variant="danger">
                     <Tooltip variant="danger">
                       Item is already in your cart
                     </Tooltip>
-                  
                   </Overlay>
                 </Col>
               ) : (

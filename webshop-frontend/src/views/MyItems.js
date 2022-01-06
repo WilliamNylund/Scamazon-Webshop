@@ -1,4 +1,4 @@
-import { Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import Header from "../components/Header";
 import AddItemModal from "../components/Modals/AddItemModal";
 import OnSale from "../components/my_items/onSale";

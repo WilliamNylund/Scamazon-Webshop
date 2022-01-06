@@ -1,15 +1,15 @@
-import { Container, Form, Button, Alert } from "react-bootstrap";
-import Header from "../components/Header";
-import { useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Container, Form, Button, Alert } from 'react-bootstrap';
+import Header from '../components/Header';
+import { useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [rePassword, setRePassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [userCreated, setUserCreated] = useState(false);
 
   const updateEmail = (e) => setEmail(e.target.value);
@@ -19,7 +19,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let request = axios.post("http://127.0.0.1:8000/api/users/", {
+    let request = axios.post('http://127.0.0.1:8000/api/users/', {
       email: email,
       username: username,
       password: password,
@@ -29,7 +29,7 @@ const SignUp = () => {
       setUserCreated(true);
     });
     request.catch((e) => {
-      setErrorMsg("Unable to register");
+      setErrorMsg('Unable to register');
     });
   };
 

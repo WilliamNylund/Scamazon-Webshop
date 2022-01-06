@@ -1,12 +1,12 @@
-import Header from "../Header";
-import { Container, Row, Col } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import MyProductCard from "./MyProductCard.js";
+import Header from '../Header';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import MyProductCard from './MyProductCard.js';
 
 const Sold = () => {
   const [products, setProducts] = useState([]);
-  const [alertMsg, setAlertMsg] = useState("");
+  const [alertMsg, setAlertMsg] = useState('');
 
   useEffect(() => {
     getProducts()
@@ -14,7 +14,7 @@ const Sold = () => {
         if (res.data.length > 0) {
           setProducts(res.data);
         } else {
-          setAlertMsg("No sold items");
+          setAlertMsg('No sold items');
         }
       })
       .catch((e) => {
@@ -44,7 +44,7 @@ const Sold = () => {
 export default Sold;
 
 const getProducts = async () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   let request = axios.get(`http://127.0.0.1:8000/api/my-items/?sold=true`, {
     headers: {
       Authorization: `Token ${token}`,

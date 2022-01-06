@@ -1,12 +1,12 @@
-import Header from "../Header";
-import { Container, Row, Col } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import MyProductCard from "./MyProductCard.js";
+import Header from '../Header';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import MyProductCard from './MyProductCard.js';
 
 const Purchased = () => {
   const [products, setProducts] = useState([]);
-  const [alertMsg, setAlertMsg] = useState("");
+  const [alertMsg, setAlertMsg] = useState('');
 
   useEffect(() => {
     getProducts()
@@ -15,7 +15,7 @@ const Purchased = () => {
         if (PurchasedProducts.length > 0) {
           setProducts(PurchasedProducts);
         } else {
-          setAlertMsg("No purchased items. Head to the shop!");
+          setAlertMsg('No purchased items. Head to the shop!');
         }
       })
       .catch((e) => {
@@ -45,7 +45,7 @@ const Purchased = () => {
 export default Purchased;
 
 const getProducts = async () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   let request = axios.get(`http://127.0.0.1:8000/api/orders/`, {
     headers: {
       Authorization: `Token ${token}`,

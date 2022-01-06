@@ -1,27 +1,27 @@
-import ProductCard from "./ProductCard.js";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { Container, FormControl, Alert } from "react-bootstrap";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import ProductCard from './ProductCard.js';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { Container, FormControl, Alert } from 'react-bootstrap';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNo, setPageNo] = useState(1);
-  const [titleFilter, setTitleFilter] = useState("");
-  const [alertMsg, setAlertMsg] = useState("");
+  const [titleFilter, setTitleFilter] = useState('');
+  const [alertMsg, setAlertMsg] = useState('');
 
   useEffect(() => {
     getProducts(pageNo, titleFilter)
       .then((res) => {
         console.log(res);
         if (res.data.length > 0) {
-          console.log("setting products");
+          console.log('setting products');
           console.log(typeof res.data);
           setProducts(res.data);
         } else {
-          setAlertMsg("No products available");
+          setAlertMsg('No products available');
         }
       })
       .catch((e) => {
@@ -31,16 +31,16 @@ const Products = () => {
 
   const updateTitleFilter = (e) => {
     setTitleFilter(e.target.value);
-    setPageNo(1)
+    setPageNo(1);
     getProducts(1, e.target.value)
       .then((res) => {
         setProducts([]);
         if (res.data.length > 0) {
-          console.log("yes exists");
+          console.log('yes exists');
           setProducts(res.data);
         } else {
-          console.log("no does not exists");
-          setAlertMsg("No products available with that filter");
+          console.log('no does not exists');
+          setAlertMsg('No products available with that filter');
         }
       })
       .catch((e) => {
@@ -59,7 +59,7 @@ const Products = () => {
           if (res.data.length > 0) {
             setProducts([...products, ...res.data]);
           } else {
-            setAlertMsg("No more products available");
+            setAlertMsg('No more products available');
           }
         })
         .catch((e) => {
@@ -91,9 +91,7 @@ const Products = () => {
           </Row>
           {alertMsg && (
             <Row className="justify-content-center mt-4">
-              <Col md="auto">
-                {alertMsg}
-              </Col>
+              <Col md="auto">{alertMsg}</Col>
             </Row>
           )}
         </Container>

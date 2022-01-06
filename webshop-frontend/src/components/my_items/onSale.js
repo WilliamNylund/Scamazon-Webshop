@@ -1,12 +1,12 @@
-import Header from "../Header";
-import { Container, Row, Col } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import MyProductCard from "./MyProductCard.js";
+import Header from '../Header';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import MyProductCard from './MyProductCard.js';
 
 const OnSale = () => {
   const [products, setProducts] = useState([]);
-  const [alertMsg, setAlertMsg] = useState("");
+  const [alertMsg, setAlertMsg] = useState('');
 
   useEffect(() => {
     getProducts()
@@ -14,7 +14,7 @@ const OnSale = () => {
         if (res.data.length > 0) {
           setProducts(res.data);
         } else {
-          setAlertMsg("You have no items on sale currently");
+          setAlertMsg('You have no items on sale currently');
         }
       })
       .catch((e) => {
@@ -28,7 +28,11 @@ const OnSale = () => {
       <Row xs={1} md={2} className="g-4">
         {products.map((product, index) => (
           <Col key={product.id.toString()}>
-            <MyProductCard key={product.id.toString()} product={product} type="onSale"/>
+            <MyProductCard
+              key={product.id.toString()}
+              product={product}
+              type="onSale"
+            />
           </Col>
         ))}
       </Row>
@@ -44,7 +48,7 @@ const OnSale = () => {
 export default OnSale;
 
 const getProducts = async () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   let request = axios.get(`http://127.0.0.1:8000/api/my-items/?sale=true`, {
     headers: {
       Authorization: `Token ${token}`,

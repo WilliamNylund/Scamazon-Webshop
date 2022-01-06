@@ -1,13 +1,13 @@
-import { Button, Row, Col, Offcanvas, Alert } from "react-bootstrap";
-import { BsCart2, BsXLg } from "react-icons/bs";
-import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
-import axios from "axios";
+import { Button, Row, Col, Offcanvas, Alert } from 'react-bootstrap';
+import { BsXLg } from 'react-icons/bs';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
+import axios from 'axios';
 
 const CartOffcanvas = ({ show, handleClose }) => {
   const user = useContext(UserContext);
   const [cart, setCart] = useState({});
-  const [total, setTotal] = useState("0");
+  const [total, setTotal] = useState('0');
   const [showSuccess, setShowSuccess] = useState(false);
 
   const calculateCartTotal = () => {
@@ -19,33 +19,33 @@ const CartOffcanvas = ({ show, handleClose }) => {
 
       setTotal(priceTotal.toFixed(2));
     } else {
-      setTotal("0");
+      setTotal('0');
     }
   };
 
   const populateCart = async () => {
-    let storageCart = JSON.parse(localStorage.getItem("cart")) || {};
+    let storageCart = JSON.parse(localStorage.getItem('cart')) || {};
     setCart(storageCart);
   };
 
   const removeProduct = (productId) => {
-    const storageCart = JSON.parse(localStorage.getItem("cart")) || {};
+    const storageCart = JSON.parse(localStorage.getItem('cart')) || {};
     delete storageCart[productId];
-    localStorage.setItem("cart", JSON.stringify(storageCart));
+    localStorage.setItem('cart', JSON.stringify(storageCart));
     setCart(storageCart);
   };
 
   const emptyCart = () => {
     setCart({});
-    localStorage.removeItem("cart");
+    localStorage.removeItem('cart');
   };
 
   const pay = () => {
     //const productIds = Object.keys(cart);
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     axios
       .post(
-        "http://127.0.0.1:8000/api/orders/",
+        'http://127.0.0.1:8000/api/orders/',
         { cart: cart },
         {
           headers: {
@@ -75,16 +75,16 @@ const CartOffcanvas = ({ show, handleClose }) => {
     for (let id in warnings) {
       if (warnings[id].exists) {
         tempCart[id].warningText =
-          "Price of this item has been updated from " +
+          'Price of this item has been updated from ' +
           tempCart[id].price +
-          " €";
+          ' €';
         tempCart[id].price = warnings[id].new_price;
       } else {
         tempCart[id].warningText =
-          "This item is no longer available, please remove from cart";
+          'This item is no longer available, please remove from cart';
       }
     }
-    localStorage.setItem("cart", JSON.stringify(tempCart));
+    localStorage.setItem('cart', JSON.stringify(tempCart));
     setCart(tempCart);
   };
 
@@ -97,8 +97,7 @@ const CartOffcanvas = ({ show, handleClose }) => {
       show={show}
       onHide={handleClose}
       placement="end"
-      onEntering={populateCart}
-    >
+      onEntering={populateCart}>
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>
           <h3>Shopping Cart</h3>

@@ -1,11 +1,11 @@
-import { Container, Button, Modal, Form, Alert } from "react-bootstrap";
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { Container, Button, Modal, Form, Alert } from 'react-bootstrap';
+import { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 
 const AddItemModal = () => {
   const [show, setShow] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -18,11 +18,11 @@ const AddItemModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submit");
-    const token = localStorage.getItem("token");
+    console.log('submit');
+    const token = localStorage.getItem('token');
     axios
       .post(
-        "http://127.0.0.1:8000/api/items/",
+        'http://127.0.0.1:8000/api/items/',
         {
           title: title,
           description: description,
@@ -40,9 +40,9 @@ const AddItemModal = () => {
         window.setTimeout(() => {
           setShowSuccess(false);
         }, 2000);
-        setTitle("")
-        setDescription("")
-        setPrice(0)
+        setTitle('');
+        setDescription('');
+        setPrice(0);
       })
       .catch((e) => {
         console.log(e);
