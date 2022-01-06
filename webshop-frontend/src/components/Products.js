@@ -15,7 +15,10 @@ const Products = () => {
   useEffect(() => {
     getProducts(pageNo, titleFilter)
       .then((res) => {
+        console.log(res);
         if (res.data.length > 0) {
+          console.log("setting products");
+          console.log(typeof res.data);
           setProducts(res.data);
         } else {
           setAlertMsg("No products available");

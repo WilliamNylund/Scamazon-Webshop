@@ -40,6 +40,12 @@ div.products {
     height: 700px;
     overflow-y: auto;
 }
+div.my-items-container {
+    border: solid 2px #343a40;
+    border-radius: 20px;
+    margin-top: 25px;
+    padding: 12px;
+}
 
 div.shopping-cart-row {
     font-size: 20px;
@@ -48,7 +54,7 @@ div.shopping-cart-row {
 
 div.shopping-cart-line {
     border-bottom: solid 1px $primary;
-    font-size: 10px;
+    font-size: 11px;
     color: red;
 }
 div.shopping-cart-bottom-line {

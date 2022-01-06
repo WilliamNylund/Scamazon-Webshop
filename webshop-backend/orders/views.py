@@ -1,4 +1,4 @@
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, OrderWithItemsSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,6 +6,7 @@ from django.http import Http404
 from .models import Order
 from items.models import Item
 from rest_framework import permissions
+from decimal import Decimal
 
 class OrderList(APIView):
     """
@@ -15,11 +16,27 @@ class OrderList(APIView):
     def get(self, request, format=None):
         user = request.user
         orders = Order.objects.all().filter(consumer=user)
-        serializer = OrderSerializer(orders, many=True)
+        serializer = OrderWithItemsSerializer(orders, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
+
+        #validate items
+        cart = request.data['cart']
+        warnings = {}
+        for id, cart_item in cart.items():
+            item = Item.objects.filter(pk=id, order=None).first()
+            if item: 
+                #Item still exists and is not purchased by another user
+                if Decimal(cart_item['price']) != item.price:
+                    warnings[id] = {"exists": True, "new_price": str(item.price)}
+            else:
+                warnings[id] = {"exists": False}
+        if warnings:
+            return Response(warnings, status=status.HTTP_300_MULTIPLE_CHOICES)
+        
         request.data['consumer'] = request.user.pk
+        request.data['items'] = list(cart.keys())
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

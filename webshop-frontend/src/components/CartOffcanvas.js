@@ -25,10 +25,6 @@ const CartOffcanvas = ({ show, handleClose }) => {
 
   const populateCart = async () => {
     let storageCart = JSON.parse(localStorage.getItem("cart")) || {};
-    if (Object.keys(storageCart).length > 0) {
-      storageCart = await addWarningTexts(storageCart);
-      localStorage.setItem("cart", JSON.stringify(storageCart));
-    }
     setCart(storageCart);
   };
 
@@ -45,12 +41,12 @@ const CartOffcanvas = ({ show, handleClose }) => {
   };
 
   const pay = () => {
-    const productIds = Object.keys(cart);
+    //const productIds = Object.keys(cart);
     const token = localStorage.getItem("token");
     axios
       .post(
         "http://127.0.0.1:8000/api/orders/",
-        { items: productIds },
+        { cart: cart },
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -66,8 +62,30 @@ const CartOffcanvas = ({ show, handleClose }) => {
         emptyCart();
       })
       .catch((e) => {
-        console.log(e.message);
+        if (e.response.status == 300) {
+          addWarningLabels(e.response.data);
+        } else {
+          console.log(e.message);
+        }
       });
+  };
+
+  const addWarningLabels = (warnings) => {
+    let tempCart = JSON.parse(JSON.stringify(cart)); //Creating a deep copy of cart so that the component re-renders
+    for (let id in warnings) {
+      if (warnings[id].exists) {
+        tempCart[id].warningText =
+          "Price of this item has been updated from " +
+          tempCart[id].price +
+          " €";
+        tempCart[id].price = warnings[id].new_price;
+      } else {
+        tempCart[id].warningText =
+          "This item is no longer available, please remove from cart";
+      }
+    }
+    localStorage.setItem("cart", JSON.stringify(tempCart));
+    setCart(tempCart);
   };
 
   useEffect(() => {
@@ -130,7 +148,7 @@ const CartOffcanvas = ({ show, handleClose }) => {
           </Row>
         )}
         <Row>
-          <Col xs="12" >
+          <Col xs="12">
             {showSuccess && (
               <Alert variant="success">Purchase successful</Alert>
             )}
@@ -142,29 +160,3 @@ const CartOffcanvas = ({ show, handleClose }) => {
 };
 
 export default CartOffcanvas;
-
-const addWarningTexts = async (cart) => {
-  let filterString = "ids=";
-  Object.keys(cart).map((id, i) => {
-    if (i == 0) {
-      filterString += id;
-    } else {
-      filterString += "," + id;
-    }
-  });
-
-  const request = await getProducts(filterString);
-  request.data.map((product, index) => {
-    if (product.price != cart[product.id].price) {
-      console.log("price changed");
-      cart[product.id].warningText =
-        "The price of this item has changed to " + product.price;
-    }
-  });
-  return cart;
-};
-
-const getProducts = async (filterString) => {
-  let request = axios.get(`http://127.0.0.1:8000/api/items/?${filterString}`);
-  return request;
-};
