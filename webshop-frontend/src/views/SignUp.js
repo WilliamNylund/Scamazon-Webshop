@@ -1,8 +1,9 @@
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import Header from '../components/Header';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const SignUp = () => {
   const [rePassword, setRePassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [userCreated, setUserCreated] = useState(false);
+  const { user } = useContext(UserContext);
 
   const updateEmail = (e) => setEmail(e.target.value);
   const updateUsername = (e) => setUsername(e.target.value);
@@ -32,6 +34,14 @@ const SignUp = () => {
       setErrorMsg('Unable to register');
     });
   };
+
+  if (user) {
+    return (
+      <Container className="form-input justify-content-md-center">
+        <h4>You're already logged in!</h4>
+      </Container>
+    );
+  }
 
   return (
     <Container className="form-input justify-content-md-center">

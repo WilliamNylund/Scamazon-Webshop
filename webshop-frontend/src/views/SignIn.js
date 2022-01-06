@@ -36,6 +36,14 @@ const SignIn = () => {
       });
   };
 
+  if (user) {
+    return (
+      <Container className="form-input justify-content-md-center">
+        <h4>You're already logged in!</h4>
+      </Container>
+    );
+  }
+
   return (
     <Container className="form-input justify-content-md-center">
       <Header text="Sign in" />

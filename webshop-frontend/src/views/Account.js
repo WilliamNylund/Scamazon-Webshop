@@ -1,14 +1,17 @@
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import Header from '../components/Header';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
 
 const Account = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [success, setSuccess] = useState(false);
+  const { user } = useContext(UserContext);
 
   const updateOldPassword = (e) => setOldPassword(e.target.value);
   const updatePassword = (e) => setPassword(e.target.value);
@@ -32,20 +35,31 @@ const Account = () => {
       )
       .then(async (res) => {
         console.log('password changed');
-        console.log(res.data);
+        setSuccess(true)
+        window.setTimeout(() => {
+          setSuccess(false);
+        }, 4000);
       })
       .catch((e) => {
-        console.log(e);
-        console.log(e.message);
-        setErrorMsg('Unable to sign in with provided credentials');
-        // TODO please try again or reset password?
+        setErrorMsg('The provided information was not correct, please try again');
+        window.setTimeout(() => {
+          setErrorMsg('');
+        }, 4000);
       });
   };
+  if (!user) {
+    return (
+      <Container className="form-input justify-content-md-center">
+        <h4>Please log in before accessing this page.</h4>
+      </Container>
+    );
+  }
 
   return (
     <Container className="form-input justify-content-md-center">
       <Header text="Reset password" />
       {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
+      {success && <Alert variant="success">Password reset successful!</Alert>}
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Current password</Form.Label>

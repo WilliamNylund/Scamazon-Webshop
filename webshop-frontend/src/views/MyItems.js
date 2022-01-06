@@ -4,15 +4,26 @@ import AddItemModal from '../components/Modals/AddItemModal';
 import OnSale from '../components/my_items/onSale';
 import Sold from '../components/my_items/Sold';
 import Purchased from '../components/my_items/Purchased';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
+
 const MyItems = () => {
   const [showOnSale, setShowOnSale] = useState(true);
   const [showSold, setShowSold] = useState(true);
   const [showPurchased, setShowPurchased] = useState(true);
+  const { user } = useContext(UserContext);
 
   const onSaleChanged = (e) => setShowOnSale(!showOnSale);
   const soldChanged = (e) => setShowSold(!showSold);
   const purchasedChanged = (e) => setShowPurchased(!showPurchased);
+
+  if (!user) {
+    return (
+      <Container className="form-input justify-content-md-center">
+        <h4>Please log in before accessing this page.</h4>
+      </Container>
+    );
+  }
 
   return (
     <Container className="container-fluid">
