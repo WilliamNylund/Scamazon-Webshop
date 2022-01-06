@@ -7,6 +7,7 @@ from .models import Order
 from items.models import Item
 from rest_framework import permissions
 from decimal import Decimal
+from django.core.mail import send_mail
 
 class OrderList(APIView):
     """
@@ -20,9 +21,9 @@ class OrderList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
+        cart = request.data['cart']
 
         #validate items
-        cart = request.data['cart']
         warnings = {}
         for id, cart_item in cart.items():
             item = Item.objects.filter(pk=id, order=None).first()
@@ -40,6 +41,26 @@ class OrderList(APIView):
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+
+            #send emails to sellers
+            bought_items_string = ''
+            for id, cart_item in cart.items():
+                item = Item.objects.filter(pk=id).first()
+                bought_items_string += item.title + ': '+ str(item.price) + '€ \n'
+                send_mail(
+                    'Your item has been sold on Scamazon',
+                    'Dear scamazon user, \nYour item ' + item.title + ' has been sold for the price of ' + str(item.price) + ' €',
+                    'info@scamazon.com',
+                    [item.owner],
+                    fail_silently=False,
+                    )
+            send_mail(
+                'Your item has been sold on Scamazon',
+                'Dear scamazon user, \nYour purchase was successful. Here is your receipt: \n' + bought_items_string,
+                'info@scamazon.com',
+                [request.user.email],
+                fail_silently=False,
+                )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
