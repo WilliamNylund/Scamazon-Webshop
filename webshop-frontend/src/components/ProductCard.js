@@ -4,7 +4,7 @@ import { Row, Col, Button, Tooltip, Overlay } from "react-bootstrap";
 import { UserContext } from "../contexts/UserContext";
 import { useState, useEffect, useContext, useRef } from "react";
 
-const Products = ({ product }) => {
+const ProductCard = ({ product }) => {
   const { user } = useContext(UserContext);
   const [showToolTip, setShowToolTip] = useState(false)
   const target = useRef(null);
@@ -80,4 +80,4 @@ const Products = ({ product }) => {
     </div>
   );
 };
-export default Products;
+export default ProductCard;
