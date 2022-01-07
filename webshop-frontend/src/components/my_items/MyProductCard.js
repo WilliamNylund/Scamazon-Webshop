@@ -35,6 +35,7 @@ const MyProductCard = ({ product, type, setTest }) => {
       .then((response) => {
         handleCloseConfirmation();
         setCurrentPrice(parseFloat(newPrice).toFixed(2));
+        setNewPrice('');
       })
       .catch((e) => {
         console.log('unable to update price');
@@ -65,6 +66,7 @@ const MyProductCard = ({ product, type, setTest }) => {
                     step="0.50"
                     min="0"
                     placeholder="New price"
+                    value={newPrice}
                     name="price"
                     onChange={onPriceChange}
                   />

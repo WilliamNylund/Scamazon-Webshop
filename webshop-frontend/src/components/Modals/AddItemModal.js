@@ -2,11 +2,11 @@ import { Container, Button, Modal, Form, Alert } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-const AddItemModal = () => {
+const AddItemModal = ({ setProducts }) => {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -18,7 +18,6 @@ const AddItemModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('submit');
     const token = localStorage.getItem('token');
     axios
       .post(
@@ -40,12 +39,13 @@ const AddItemModal = () => {
         window.setTimeout(() => {
           setShowSuccess(false);
         }, 2000);
+        setProducts((oldProducts) => [...oldProducts, res.data]);
+        //clear input fields
         setTitle('');
         setDescription('');
-        setPrice(0);
+        setPrice('');
       })
       .catch((e) => {
-        console.log(e);
         console.log(e.message);
       });
   };
@@ -69,6 +69,7 @@ const AddItemModal = () => {
                   required
                   type="text"
                   placeholder="Enter title"
+                  value={title}
                   name="title"
                   onChange={updateTitle}
                 />
@@ -79,6 +80,7 @@ const AddItemModal = () => {
                   required
                   type="textarea"
                   placeholder="Enter description"
+                  value={description}
                   name="description"
                   onChange={updateDescription}
                 />
@@ -91,6 +93,7 @@ const AddItemModal = () => {
                   step="0.50"
                   min="0"
                   placeholder="Enter price"
+                  value={price}
                   name="price"
                   onChange={updatePrice}
                 />
