@@ -1,13 +1,12 @@
 import ProductCard from './ProductCard.js';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Container, FormControl, Alert } from 'react-bootstrap';
+import { Container, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [pageNo, setPageNo] = useState(1);
   const [titleFilter, setTitleFilter] = useState('');
   const [alertMsg, setAlertMsg] = useState('');
@@ -17,8 +16,6 @@ const Products = () => {
       .then((res) => {
         console.log(res);
         if (res.data.length > 0) {
-          console.log('setting products');
-          console.log(typeof res.data);
           setProducts(res.data);
         } else {
           setAlertMsg('No products available');
@@ -36,10 +33,8 @@ const Products = () => {
       .then((res) => {
         setProducts([]);
         if (res.data.length > 0) {
-          console.log('yes exists');
           setProducts(res.data);
         } else {
-          console.log('no does not exists');
           setAlertMsg('No products available with that filter');
         }
       })
@@ -74,7 +69,7 @@ const Products = () => {
         <FormControl
           size="sm"
           type="text"
-          placeholder="Searcha"
+          placeholder="Search"
           name="titleFilter"
           onChange={updateTitleFilter}
         />

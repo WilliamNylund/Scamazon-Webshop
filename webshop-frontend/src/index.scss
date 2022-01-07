@@ -34,7 +34,7 @@ div.product-title {
 }
 
 div.products {
-  height: 700px;
+  height: 689px;
   overflow-y: auto;
 }
 div.my-items-container {
@@ -79,12 +79,11 @@ button.icon-button {
 
 a.logo {
   text-decoration: none;
-  font-size: 3rem
+  font-size: 1.5rem;
+  @media only screen and (min-width: 768px) {
+    font-size: 3rem;
+  }
 }
 a.logo:hover {
   color: $primary
-}
-
-.main {
-  background-color: $primary;
 }
