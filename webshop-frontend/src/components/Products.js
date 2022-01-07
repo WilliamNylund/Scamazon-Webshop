@@ -74,7 +74,7 @@ const Products = () => {
         <FormControl
           size="sm"
           type="text"
-          placeholder="Search"
+          placeholder="Searcha"
           name="titleFilter"
           onChange={updateTitleFilter}
         />

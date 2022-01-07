@@ -3,12 +3,9 @@ $primary: #00704a;
 @import '~bootstrap/scss/bootstrap.scss';
 
 body {
-  font: 14px 'Century Gothic', Futura, sans-serif;
+  font: 14px 'Century Gothic';
 }
 
-div.carousel {
-  max-height: 200px;
-}
 div.info-container {
   max-width: 800px;
   margin: 20px;
@@ -78,4 +75,16 @@ button.icon-button {
 
 .dropdown-toggle:after {
   border: 0;
+}
+
+a.logo {
+  text-decoration: none;
+  font-size: 3rem
+}
+a.logo:hover {
+  color: $primary
+}
+
+.main {
+  background-color: $primary;
 }

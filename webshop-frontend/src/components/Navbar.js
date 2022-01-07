@@ -1,6 +1,5 @@
 import Navbar from 'react-bootstrap/Navbar';
 import { Container, Button, Dropdown } from 'react-bootstrap';
-import logo from '../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
@@ -37,15 +36,8 @@ const NavbarComponent = () => {
     <Navbar bg="dark" variant="dark" className="mb-3">
       <Container>
         <Navbar.Brand>
-          <Link to="/shop">
-            <img
-              alt="logo"
-              src={logo}
-              width="60"
-              height="60"
-              className="d-inline-block align-top"
-            />{' '}
-            Scamazon
+          <Link to="/shop" className="logo">
+            SCAMAZON
           </Link>
         </Navbar.Brand>
 
