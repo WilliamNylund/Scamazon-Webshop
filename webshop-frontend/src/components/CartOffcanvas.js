@@ -134,8 +134,7 @@ const CartOffcanvas = ({ show, handleClose }) => {
           <Col xs="6">
             <strong>Total:</strong>
           </Col>
-          <Col xs="4">{total} €</Col>
-          <Col xs="2"></Col>
+          <Col xs="6">{total} €</Col>
         </Row>
         {Object.keys(cart).length > 0 && (
           <Row>
