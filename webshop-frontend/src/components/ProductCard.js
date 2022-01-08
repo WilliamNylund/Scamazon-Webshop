@@ -1,25 +1,25 @@
 import Card from 'react-bootstrap/Card';
 import { Row, Col, Button, Tooltip, Overlay } from 'react-bootstrap';
 import { UserContext } from '../contexts/UserContext';
-import { useState, useContext, useRef } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 
 const ProductCard = ({ product }) => {
   const { user } = useContext(UserContext);
-  const [showToolTip, setShowToolTip] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipText, setTooltipText] = useState('');
   const target = useRef(null);
 
   const addToCart = () => {
     const cart = JSON.parse(localStorage.getItem('cart')) || {};
     if (inCart()) {
-      console.log('product already exists in cart');
-      setShowToolTip(true);
-      setTimeout(() => {
-        setShowToolTip(false);
-      }, 1500);
-      return;
+      setTooltipText('Item is already in your cart');
+      setShowTooltip(true);
+    } else {
+      cart[product.id] = product;
+      localStorage.setItem('cart', JSON.stringify(cart));
+      setTooltipText('Added to cart!');
     }
-    cart[product.id] = product;
-    localStorage.setItem('cart', JSON.stringify(cart));
+    setShowTooltip(true);
   };
 
   const inCart = () => {
@@ -29,6 +29,12 @@ const ProductCard = ({ product }) => {
     }
     return false;
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowTooltip(false);
+    }, 1500);
+  }, [showTooltip]);
 
   return (
     <div className="productCard">
@@ -56,13 +62,10 @@ const ProductCard = ({ product }) => {
                     Add to cart
                   </Button>
                   <Overlay
-                    show={showToolTip}
+                    show={showTooltip}
                     placement="right"
-                    target={target.current}
-                    variant="danger">
-                    <Tooltip variant="danger">
-                      Item is already in your cart
-                    </Tooltip>
+                    target={target.current}>
+                    <Tooltip>{tooltipText}</Tooltip>
                   </Overlay>
                 </Col>
               ) : (

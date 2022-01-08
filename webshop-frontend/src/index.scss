@@ -11,10 +11,12 @@ div.info-container {
   margin: 20px;
   border: 5px solid green;
 }
+
 div.info-item {
   margin: 20px;
   border: 5px solid red;
 }
+
 div.form-input {
   max-width: 400px;
 }
@@ -37,6 +39,7 @@ div.products {
   height: 689px;
   overflow-y: auto;
 }
+
 div.my-items-container {
   border: solid 2px #343a40;
   border-radius: 20px;
@@ -54,6 +57,7 @@ div.shopping-cart-line {
   font-size: 11px;
   color: red;
 }
+
 div.shopping-cart-bottom-line {
   font-size: 25px;
   margin-bottom: 25px;
@@ -84,6 +88,11 @@ a.logo {
     font-size: 3rem;
   }
 }
+
 a.logo:hover {
-  color: $primary
+  color: $primary;
+}
+
+.tooltip > div.tooltip-inner {
+  background-color: $dark !important;
 }
