@@ -21,11 +21,13 @@ const MyProductCard = ({ product, type, setTest }) => {
 
   const updatePrice = () => {
     const token = localStorage.getItem('token');
+    const roundedPrice = parseFloat(newPrice).toFixed(2)
+    console.log(roundedPrice);
     const url = 'http://127.0.0.1:8000/api/items/' + product.id + '/';
     axios
       .put(
         url,
-        { price: newPrice },
+        { price: roundedPrice },
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -63,7 +65,7 @@ const MyProductCard = ({ product, type, setTest }) => {
                   <Form.Control
                     size="sm"
                     type="number"
-                    step="0.50"
+                    step="any"
                     min="0"
                     placeholder="New price"
                     value={newPrice}

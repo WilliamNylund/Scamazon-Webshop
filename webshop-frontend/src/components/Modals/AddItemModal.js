@@ -18,6 +18,7 @@ const AddItemModal = ({ setProducts }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const roundedPrice = parseFloat(price).toFixed(2)
     const token = localStorage.getItem('token');
     axios
       .post(
@@ -25,7 +26,7 @@ const AddItemModal = ({ setProducts }) => {
         {
           title: title,
           description: description,
-          price: price,
+          price: roundedPrice,
         },
         {
           headers: {
@@ -90,7 +91,7 @@ const AddItemModal = ({ setProducts }) => {
                 <Form.Control
                   required
                   type="number"
-                  step="0.50"
+                  step="any"
                   min="0"
                   placeholder="Enter price"
                   value={price}
