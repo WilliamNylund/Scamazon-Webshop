@@ -53,7 +53,7 @@ const SignUp = () => {
           <p>Welcome {username}, please proceed to sign in.</p>
           <hr />
           <div className="d-flex justify-content-end">
-            <Link to="/signin">
+            <Link to="/login">
               <Button variant="primary">Sign in</Button>
             </Link>
           </div>

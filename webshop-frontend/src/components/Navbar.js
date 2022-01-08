@@ -96,7 +96,7 @@ const NavbarComponent = () => {
                 </Button>
               </Link>
 
-              <Link to="/signin" className="pl-2">
+              <Link to="/login" className="pl-2">
                 <Button
                   className="button-group"
                   variant="outline-primary"
