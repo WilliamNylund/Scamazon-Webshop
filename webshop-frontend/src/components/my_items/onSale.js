@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import MyProductCard from './MyProductCard.js';
+import AddItemModal from '../Modals/AddItemModal';
 
 const OnSale = () => {
   const [products, setProducts] = useState([]);
@@ -24,7 +25,16 @@ const OnSale = () => {
 
   return (
     <Container className="container-fluid my-items-container">
-      <Header text="On sale" />
+      <Container className="header-container">
+        <Row>
+          <Col>
+            <h3>On sale</h3>
+          </Col>
+          <Col className="text-end">
+            <AddItemModal setProducts={setProducts}/>
+          </Col>
+        </Row>
+      </Container>
       <Row xs={1} md={2} className="g-4">
         {products.map((product, index) => (
           <Col key={product.id.toString()}>
