@@ -27,13 +27,13 @@ python webshop-backend/manage.py migrate
 ```
 Build frontend
 ```
-cd ../webshop-frontend/
+cd webshop-frontend/
 ```
 ```
 npm install
 ```
 ```
-npm build
+npm run build
 ```
 Start server
 ```
