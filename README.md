@@ -1,15 +1,14 @@
 # **Scamazon**
-*Created by William Nylund (wnylund@abo.fi)*
 
-## Requirements implemented
-- All of them
+## Description
+This is a webshop made with Django Rest Framework and React. This project is made as part of an university course and fulfills the requirement specifications provided.
 
 ## Installation guide
-clone repository and:
+clone repository and navigate to root folder:
 ```
-cd webshop2021-project-WilliamNylund
+cd Scamazon-Webshop
 ```
-Create an virtual environment with
+Create an virtual environment
 ```
 python3 -m venv env
 ```
